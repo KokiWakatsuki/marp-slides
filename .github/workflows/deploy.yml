@@ -3,15 +3,17 @@ name: Deploy slides to GitHub Pages
 on:
   push:
     branches:
-      - main  # mainブランチへのpushをトリガーにする
+      - main
+
+# 権限の設定：これが無いとデプロイに失敗します
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # peaceiris/actions-gh-pagesがリポジトリに書き込むために必要
-      pages: write
-      id-token: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 安定したバージョンを指定
+          node-version: '20'
           cache: 'npm'
 
       - name: Install dependencies
@@ -27,7 +29,6 @@ jobs:
 
       - name: Build slides
         run: |
-          # dist/slidesディレクトリを作成し、そこにHTMLをエクスポート
           npx @marp-team/marp-cli@latest --input-dir slides --output dist/slides --html
 
       - name: Generate index page
@@ -37,4 +38,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # 公開するディレクトリを指定
+          publish_dir: ./dist
