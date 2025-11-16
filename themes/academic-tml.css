@@ -35,6 +35,8 @@ h4 {
 p {
   font-size: 28px;
   line-height: 1.5;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 section {
@@ -43,12 +45,18 @@ section {
   padding-top: 90px;
   padding-left: 40px;
   padding-right: 40px;
+  letter-spacing: -0.02em;
 }
 
 /* https://github.com/marp-team/marpit/issues/271 */
 section::after {
   font-weight: 700;
   content: attr(data-marpit-pagination) '/' attr(data-marpit-pagination-total);
+}
+
+ul, ol {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 ul ul {
